@@ -1,8 +1,8 @@
 
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>LOKESH S</H3>
+<H3>REGISTER NO: 212224240079</H3>
 <H3>EX. NO.4</H3>
-<H3>DATE:</H3>
+
 <H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
@@ -116,11 +116,104 @@ Normalize our dataset.
 
 <H3>Program:</H3> 
 
-Insert your code here
+```
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import (
+    confusion_matrix,
+    classification_report,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score
+)
+
+data = pd.read_csv("C:\\Users\\admin\\Downloads\\archive\\Dry_Bean.csv")
+
+print(data.head())
+
+X = data.drop("Class", axis=1)
+y = data["Class"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.20,
+    random_state=42,
+    stratify=y
+)
+
+scaler = StandardScaler()
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+mlp = MLPClassifier(
+    hidden_layer_sizes=(20, 10),
+    activation="relu",
+    solver="adam",
+    max_iter=500,
+    random_state=42
+)
+
+mlp.fit(X_train, y_train)
+
+y_pred = mlp.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+
+print("Predicted Classes:")
+print(y_pred)
+
+print("\nConfusion Matrix:")
+print(cm)
+
+print("\nAccuracy :", accuracy_score(y_test, y_pred))
+print("Precision:", precision_score(y_test, y_pred, average="weighted"))
+print("Recall   :", recall_score(y_test, y_pred, average="weighted"))
+print("F1 Score :", f1_score(y_test, y_pred, average="weighted"))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+print("Final Loss:", mlp.loss_)
+
+plt.figure(figsize=(8, 6))
+plt.imshow(cm)
+plt.title("Confusion Matrix")
+plt.xlabel("Predicted Class")
+plt.ylabel("Actual Class")
+plt.colorbar()
+plt.show()
+
+plt.figure(figsize=(8, 5))
+plt.plot(mlp.loss_curve_)
+plt.xlabel("Iterations")
+plt.ylabel("Loss")
+plt.title("MLP Training Loss Curve")
+plt.show()
+
+```
 
 <H3>Output:</H3>
+<img width="633" height="127" alt="image" src="https://github.com/user-attachments/assets/0453d31a-e9aa-4862-9c9f-5d3ffcc50d62" />
 
-Show your results here
+
+<img width="692" height="305" alt="image" src="https://github.com/user-attachments/assets/e2955eaf-a132-491f-bc24-0714862db05e" />
+
+
+<img width="327" height="262" alt="image" src="https://github.com/user-attachments/assets/9bba22cb-d726-42f3-a24d-bcf58b741b05" />
+
+
+<img width="497" height="321" alt="image" src="https://github.com/user-attachments/assets/71c577b6-2cf2-4138-8869-f97dabd5aa76" />
+
+
+<img width="610" height="545" alt="image" src="https://github.com/user-attachments/assets/bc517220-6b0d-44f4-91f7-d17b04b4519a" />
+<img width="691" height="468" alt="image" src="https://github.com/user-attachments/assets/c8720482-3cc3-4283-a78a-a11c83b4c3b6" />
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
